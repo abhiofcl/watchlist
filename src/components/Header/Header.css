@@ -1,0 +1,12 @@
+.Header {
+    margin: 0 auto;
+    top: 0;
+    padding: 1px;
+    width: 100%;
+    background-color: green;
+}
+.content {
+    font-size: 20px;
+    font-weight: 700;
+    color: burlywood;
+}
