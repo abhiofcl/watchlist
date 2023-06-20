@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import "./mainpage.css";
+import ShowInput from "../InputComp/ShowInput";
+
 const MainSection = () => {
   const [show, setShow] = useState("");
+  const [listItems, setlist] = useState([]);
   const handleChange = (event) => {
     setShow(event.target.value);
   };
   const handleClick = () => {
-    alert(show);
+    setlist((prevList) => [...prevList, show]);
+    setShow("");
+    alert("show");
   };
   return (
     <div className="mainpage">
-      <input
-        value={show}
-        onChange={handleChange}
-        id="showName"
-        type="text"
-        placeholder="Enter Name"
-      />
-      <button type="submit" onClick={handleClick}>
-        Add
-      </button>
+      <ShowInput show={show} onChange={handleChange} onClick={handleClick} />
+      <ul>
+        {listItems.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 };
