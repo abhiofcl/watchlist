@@ -11,11 +11,14 @@ const MainSection = () => {
   const handleClick = () => {
     setlist((prevList) => [...prevList, show]);
     setShow("");
-    alert("show");
   };
   return (
     <div className="mainpage">
-      <ShowInput show={show} onChange={handleChange} onClick={handleClick} />
+      <ShowInput
+        show={show}
+        handleChange={handleChange}
+        handleClick={handleClick}
+      />
       <ul>
         {listItems.map((item, index) => (
           <li key={index}>{item}</li>
