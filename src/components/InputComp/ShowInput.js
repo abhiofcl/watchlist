@@ -13,10 +13,6 @@ const ShowInput = (props) => {
       <button type="submit" onClick={props.handleClick}>
         Add
       </button>
-      <br />
-      <button>All</button>
-      <button>Series</button>
-      <button>Movies</button>
     </>
   );
 };
