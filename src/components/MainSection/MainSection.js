@@ -7,6 +7,10 @@ const MainSection = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [show, setShow] = useState("");
   const [listItems, setlist] = useState([]);
+  const [filterClick, setfilterClick] = useState(false);
+  const filter = ["all", "anime", "series", "movies"];
+  let filteredList = [];
+  // const [filteredList, setfilteredList] = useState([]);
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -27,6 +31,26 @@ const MainSection = () => {
     setShow("");
     setSelectedOption("");
   };
+  const handleFilter = (event) => {
+    // const listFilterType = listItems.map((item, index) => item.type);
+    setfilterClick(true);
+    const buttonFilterType = event.target.value;
+
+    if (buttonFilterType == "series") {
+      filteredList = listItems.filter((item) => item.type === "series");
+      console.log(filteredList);
+    } else if (buttonFilterType == "anime") {
+      filteredList = listItems.filter((item) => item.type === "anime");
+
+      // console.log(filteredList);
+    } else if (buttonFilterType == "movies") {
+      filteredList = listItems.filter((item) => item.type === "movies");
+
+      // console.log(filteredList);
+    } else if (buttonFilterType == "all") {
+      setfilterClick(false);
+    }
+  };
 
   return (
     <div className="mainpage">
@@ -45,11 +69,11 @@ const MainSection = () => {
         <p>Selected option: {selectedOption}</p>
       </div>
       <br />
-      <Filter />
+      <Filter onClick={handleFilter} buttonValue={filter} />
       <ul>
-        {listItems.map((item, index) => (
-          <li key={index}>{item.input}</li>
-        ))}
+        {filterClick
+          ? filteredList.map((item, index) => <li key={index}>{item.input}</li>)
+          : listItems.map((item, index) => <li key={index}>{item.input}</li>)}
       </ul>
     </div>
   );
