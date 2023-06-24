@@ -1,11 +1,20 @@
 import React from "react";
 
-const Filter = () => {
+const Filter = (props) => {
   return (
     <>
-      <button>All</button>
-      <button>Series</button>
-      <button>Movies</button>
+      <button onClick={props.onClick} value={props.buttonValue[0]}>
+        All
+      </button>
+      <button onClick={props.onClick} value={props.buttonValue[1]}>
+        Anime
+      </button>
+      <button onClick={props.onClick} value={props.buttonValue[2]}>
+        Series
+      </button>
+      <button onClick={props.onClick} value={props.buttonValue[3]}>
+        Movies
+      </button>
     </>
   );
 };

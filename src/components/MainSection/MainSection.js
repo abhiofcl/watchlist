@@ -10,7 +10,7 @@ const MainSection = () => {
   const [filterClick, setfilterClick] = useState(false);
   const filter = ["all", "anime", "series", "movies"];
   let filteredList = [];
-  // const [filteredList, setfilteredList] = useState([]);
+  const [filteredListFinal, setfilteredListFinal] = useState([]);
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -39,13 +39,14 @@ const MainSection = () => {
     if (buttonFilterType == "series") {
       filteredList = listItems.filter((item) => item.type === "series");
       console.log(filteredList);
+      setfilteredListFinal(filteredList);
     } else if (buttonFilterType == "anime") {
       filteredList = listItems.filter((item) => item.type === "anime");
-
+      setfilteredListFinal(filteredList);
       // console.log(filteredList);
     } else if (buttonFilterType == "movies") {
       filteredList = listItems.filter((item) => item.type === "movies");
-
+      setfilteredListFinal(filteredList);
       // console.log(filteredList);
     } else if (buttonFilterType == "all") {
       setfilterClick(false);
@@ -72,7 +73,9 @@ const MainSection = () => {
       <Filter onClick={handleFilter} buttonValue={filter} />
       <ul>
         {filterClick
-          ? filteredList.map((item, index) => <li key={index}>{item.input}</li>)
+          ? filteredListFinal.map((item, index) => (
+              <li key={index}>{item.input}</li>
+            ))
           : listItems.map((item, index) => <li key={index}>{item.input}</li>)}
       </ul>
     </div>
