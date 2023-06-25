@@ -7,6 +7,10 @@ const MainSection = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [show, setShow] = useState("");
   const [listItems, setlist] = useState([]);
+  const [filterClick, setfilterClick] = useState(false);
+  const filter = ["all", "anime", "series", "movies"];
+  let filteredList = [];
+  const [filteredListFinal, setfilteredListFinal] = useState([]);
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -27,6 +31,27 @@ const MainSection = () => {
     setShow("");
     setSelectedOption("");
   };
+  const handleFilter = (event) => {
+    // const listFilterType = listItems.map((item, index) => item.type);
+    setfilterClick(true);
+    const buttonFilterType = event.target.value;
+
+    if (buttonFilterType == "series") {
+      filteredList = listItems.filter((item) => item.type === "series");
+      console.log(filteredList);
+      setfilteredListFinal(filteredList);
+    } else if (buttonFilterType == "anime") {
+      filteredList = listItems.filter((item) => item.type === "anime");
+      setfilteredListFinal(filteredList);
+      // console.log(filteredList);
+    } else if (buttonFilterType == "movies") {
+      filteredList = listItems.filter((item) => item.type === "movies");
+      setfilteredListFinal(filteredList);
+      // console.log(filteredList);
+    } else if (buttonFilterType == "all") {
+      setfilterClick(false);
+    }
+  };
 
   return (
     <div className="mainpage">
@@ -42,15 +67,23 @@ const MainSection = () => {
           <option value="series">Series</option>
           <option value="movies">Movies</option>
         </select>
-        <p>Selected option: {selectedOption}</p>
+        {/* <p>Selected option: {selectedOption}</p> */}
       </div>
       <br />
-      <Filter />
-      <ul>
-        {listItems.map((item, index) => (
-          <li key={index}>{item.input}</li>
-        ))}
-      </ul>
+      <Filter onClick={handleFilter} buttonValue={filter} />
+      <ol>
+        {filterClick
+          ? filteredListFinal.map((item, index) => (
+              <li key={index}>
+                {item.input} : {item.type}
+              </li>
+            ))
+          : listItems.map((item, index) => (
+              <li key={index}>
+                {item.input} : {item.type}
+              </li>
+            ))}
+      </ol>
     </div>
   );
 };
