@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./mainpage.css";
 import ShowInput from "../InputComp/ShowInput";
 import Filter from "../FilterComp/Filter";
@@ -6,48 +6,62 @@ import Filter from "../FilterComp/Filter";
 const MainSection = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [show, setShow] = useState("");
-  const [listItems, setlist] = useState([]);
+  const [listItems, setListItems] = useState([]);
   const [filterClick, setfilterClick] = useState(false);
   const filter = ["all", "anime", "series", "movies"];
   let filteredList = [];
   const [filteredListFinal, setfilteredListFinal] = useState([]);
+
+  useEffect(() => {
+    // Retrieve data from localStorage
+    const storedItems = localStorage.getItem("listItems");
+    if (storedItems) {
+      setListItems(JSON.parse(storedItems));
+    }
+    console.log(listItems);
+  }, []);
+
+  //handling the options for the type of show
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
+  // getting the value of the entered input when changed
   const handleChange = (event) => {
     setShow(event.target.value);
   };
 
+  // Add button functionality to add items to the listItem
   const handleClick = () => {
     if (show != "" && selectedOption != "") {
       const newItem = {
         input: show,
         type: selectedOption,
       };
-      setlist((prevList) => [...prevList, newItem]);
+      const updatedList = [...listItems, newItem].sort((a, b) =>
+        a.input.localeCompare(b.input)
+      );
+      setListItems(updatedList);
+      setShow("");
+      setSelectedOption("");
+      localStorage.setItem("listItems", JSON.stringify(updatedList));
     }
-    // setlist((prevList) => [...prevList, show]);
-    setShow("");
-    setSelectedOption("");
   };
+
   const handleFilter = (event) => {
-    // const listFilterType = listItems.map((item, index) => item.type);
     setfilterClick(true);
     const buttonFilterType = event.target.value;
 
     if (buttonFilterType == "series") {
       filteredList = listItems.filter((item) => item.type === "series");
-      console.log(filteredList);
+
       setfilteredListFinal(filteredList);
     } else if (buttonFilterType == "anime") {
       filteredList = listItems.filter((item) => item.type === "anime");
       setfilteredListFinal(filteredList);
-      // console.log(filteredList);
     } else if (buttonFilterType == "movies") {
       filteredList = listItems.filter((item) => item.type === "movies");
       setfilteredListFinal(filteredList);
-      // console.log(filteredList);
     } else if (buttonFilterType == "all") {
       setfilterClick(false);
     }
@@ -67,7 +81,6 @@ const MainSection = () => {
           <option value="series">Series</option>
           <option value="movies">Movies</option>
         </select>
-        {/* <p>Selected option: {selectedOption}</p> */}
       </div>
       <br />
       <Filter onClick={handleFilter} buttonValue={filter} />
