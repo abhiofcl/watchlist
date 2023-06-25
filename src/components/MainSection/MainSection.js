@@ -67,17 +67,23 @@ const MainSection = () => {
           <option value="series">Series</option>
           <option value="movies">Movies</option>
         </select>
-        <p>Selected option: {selectedOption}</p>
+        {/* <p>Selected option: {selectedOption}</p> */}
       </div>
       <br />
       <Filter onClick={handleFilter} buttonValue={filter} />
-      <ul>
+      <ol>
         {filterClick
           ? filteredListFinal.map((item, index) => (
-              <li key={index}>{item.input}</li>
+              <li key={index}>
+                {item.input} : {item.type}
+              </li>
             ))
-          : listItems.map((item, index) => <li key={index}>{item.input}</li>)}
-      </ul>
+          : listItems.map((item, index) => (
+              <li key={index}>
+                {item.input} : {item.type}
+              </li>
+            ))}
+      </ol>
     </div>
   );
 };
